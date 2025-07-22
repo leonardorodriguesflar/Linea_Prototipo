@@ -15,12 +15,12 @@ export const Header = ({ onMenuClick }: HeaderProps) => {
             <Menu className="h-5 w-5" />
           </Button>
           <div className="flex items-center gap-3">
-            <div className="h-8 w-8 bg-gradient-primary rounded-lg flex items-center justify-center">
+            <div className="h-8 w-8 bg-gradient-primary rounded-lg flex items-center justify-center shadow-lg">
               <span className="text-white font-bold text-sm">LA</span>
             </div>
             <div>
               <h1 className="text-lg font-semibold text-foreground">Línea Alimentos</h1>
-              <p className="text-xs text-muted-foreground">Sistema de Agendamento</p>
+              <p className="text-xs text-muted-foreground">Sistema Logístico Integrado</p>
             </div>
           </div>
         </div>
