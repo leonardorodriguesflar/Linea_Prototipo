@@ -3,6 +3,7 @@ import { Header } from "@/components/Header";
 import { Sidebar } from "@/components/Sidebar";
 import { Dashboard } from "@/components/Dashboard";
 import { ScheduleManager } from "@/components/ScheduleManager";
+import { AutomationCenter } from "@/components/AutomationCenter";
 import { cn } from "@/lib/utils";
 
 const Index = () => {
@@ -15,6 +16,8 @@ const Index = () => {
         return <Dashboard />;
       case "schedule":
         return <ScheduleManager />;
+      case "automation":
+        return <AutomationCenter />;
       case "deliveries":
         return (
           <div className="text-center py-12">

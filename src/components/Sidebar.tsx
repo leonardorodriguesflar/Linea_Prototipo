@@ -1,4 +1,4 @@
-import { Calendar, BarChart3, Package, Settings, Users, Clock } from "lucide-react";
+import { Calendar, BarChart3, Package, Settings, Users, Clock, Bot } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -11,6 +11,7 @@ interface SidebarProps {
 const menuItems = [
   { id: "dashboard", label: "Dashboard", icon: BarChart3 },
   { id: "schedule", label: "Agendamentos", icon: Calendar },
+  { id: "automation", label: "Automação & Robôs", icon: Bot },
   { id: "deliveries", label: "Entregas", icon: Package },
   { id: "clients", label: "Clientes", icon: Users },
   { id: "history", label: "Histórico", icon: Clock },
