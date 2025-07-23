@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Progress } from "@/components/ui/progress";
+import { useToast } from "@/hooks/use-toast";
 import {
   Bot,
   Mail,
@@ -26,6 +27,7 @@ import {
 } from "lucide-react";
 
 export const AutomationCenter = () => {
+  const { toast } = useToast();
   const [robots, setRobots] = useState([
     {
       id: 1,
@@ -70,11 +72,21 @@ export const AutomationCenter = () => {
   ]);
 
   const toggleRobot = (id: number) => {
-    setRobots(robots.map(robot => 
-      robot.id === id 
-        ? { ...robot, status: robot.status === 'active' ? 'paused' : 'active' }
-        : robot
-    ));
+    setRobots(robots.map(robot => {
+      if (robot.id === id) {
+        const newStatus = robot.status === 'active' ? 'paused' : 'active';
+        const statusText = newStatus === 'active' ? 'ativado' : 'pausado';
+        
+        toast({
+          title: `Robô ${statusText}!`,
+          description: `${robot.name} foi ${statusText} com sucesso.`,
+          variant: newStatus === 'active' ? 'default' : 'destructive',
+        });
+        
+        return { ...robot, status: newStatus };
+      }
+      return robot;
+    }));
   };
 
   const getTypeIcon = (type: string) => {
