@@ -4,6 +4,7 @@ import { Sidebar } from "@/components/Sidebar";
 import { Dashboard } from "@/components/Dashboard";
 import { ScheduleManager } from "@/components/ScheduleManager";
 import { AutomationCenter } from "@/components/AutomationCenter";
+import { PowerAppsFlow } from "@/components/PowerAppsFlow";
 import { cn } from "@/lib/utils";
 
 const Index = () => {
@@ -18,6 +19,8 @@ const Index = () => {
         return <ScheduleManager />;
       case "automation":
         return <AutomationCenter />;
+      case "powerapps-flow":
+        return <PowerAppsFlow />;
       case "deliveries":
         return (
           <div className="text-center py-12">
@@ -55,7 +58,7 @@ const Index = () => {
     <div className="min-h-screen bg-gradient-subtle">
       <Header onMenuClick={() => setSidebarOpen(!sidebarOpen)} />
       
-      <div className="flex h-[calc(100vh-80px)]">
+      <div className="flex h-[calc(100vh-64px)]">
         <Sidebar
           activeTab={activeTab}
           setActiveTab={setActiveTab}
