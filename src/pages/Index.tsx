@@ -3,8 +3,10 @@ import { Header } from "@/components/Header";
 import { Sidebar } from "@/components/Sidebar";
 import { Dashboard } from "@/components/Dashboard";
 import { ScheduleManager } from "@/components/ScheduleManager";
-import { AutomationCenter } from "@/components/AutomationCenter";
-import { PowerAppsFlow } from "@/components/PowerAppsFlow";
+import { DeliveryManager } from "@/components/DeliveryManager";
+import { ClientManager } from "@/components/ClientManager";
+import { HistoryManager } from "@/components/HistoryManager";
+import { Settings } from "@/components/Settings";
 import { cn } from "@/lib/utils";
 
 const Index = () => {
@@ -17,38 +19,14 @@ const Index = () => {
         return <Dashboard />;
       case "schedule":
         return <ScheduleManager />;
-      case "automation":
-        return <AutomationCenter />;
-      case "powerapps-flow":
-        return <PowerAppsFlow />;
       case "deliveries":
-        return (
-          <div className="text-center py-12">
-            <h2 className="text-2xl font-bold mb-4">Gestão de Entregas</h2>
-            <p className="text-muted-foreground">Funcionalidade em desenvolvimento</p>
-          </div>
-        );
+        return <DeliveryManager />;
       case "clients":
-        return (
-          <div className="text-center py-12">
-            <h2 className="text-2xl font-bold mb-4">Gerenciar Clientes</h2>
-            <p className="text-muted-foreground">Funcionalidade em desenvolvimento</p>
-          </div>
-        );
+        return <ClientManager />;
       case "history":
-        return (
-          <div className="text-center py-12">
-            <h2 className="text-2xl font-bold mb-4">Histórico de Agendamentos</h2>
-            <p className="text-muted-foreground">Funcionalidade em desenvolvimento</p>
-          </div>
-        );
+        return <HistoryManager />;
       case "settings":
-        return (
-          <div className="text-center py-12">
-            <h2 className="text-2xl font-bold mb-4">Configurações</h2>
-            <p className="text-muted-foreground">Funcionalidade em desenvolvimento</p>
-          </div>
-        );
+        return <Settings />;
       default:
         return <Dashboard />;
     }
