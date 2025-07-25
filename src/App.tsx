@@ -2,179 +2,94 @@ import React from 'react';
 
 const App = () => {
   return (
-    <div style={{ 
-      padding: '20px', 
-      fontFamily: 'Arial, sans-serif',
-      minHeight: '100vh',
-      backgroundColor: '#f5f5f5'
-    }}>
-      <header style={{
-        backgroundColor: 'white',
-        padding: '20px',
-        marginBottom: '20px',
-        borderRadius: '8px',
-        boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
-      }}>
-        <h1 style={{ 
-          color: '#ff6b35', 
-          margin: 0,
-          fontSize: '24px'
-        }}>
+    <div className="min-h-screen bg-background p-5">
+      <header className="bg-card p-5 mb-5 rounded-lg shadow-md">
+        <h1 className="text-primary text-2xl font-bold m-0">
           🏢 Línea Alimentos - Sistema de Logística
         </h1>
-        <p style={{ 
-          color: '#666', 
-          margin: '5px 0 0 0' 
-        }}>
+        <p className="text-muted-foreground mt-1 mb-0">
           Sistema Integrado de Agendamento e Monitoramento
         </p>
       </header>
 
-      <div style={{ 
-        display: 'grid', 
-        gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', 
-        gap: '20px',
-        marginBottom: '20px'
-      }}>
-        <div style={{
-          backgroundColor: 'white',
-          padding: '20px',
-          borderRadius: '8px',
-          boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-          textAlign: 'center'
-        }}>
-          <div style={{ fontSize: '32px', color: '#ff6b35', marginBottom: '10px' }}>📅</div>
-          <h3 style={{ fontSize: '32px', margin: '0 0 5px 0', color: '#333' }}>12</h3>
-          <p style={{ margin: 0, color: '#666' }}>Agendamentos Hoje</p>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mb-5">
+        <div className="bg-card p-5 rounded-lg shadow-md text-center">
+          <div className="text-3xl text-primary mb-3">📅</div>
+          <h3 className="text-3xl font-bold m-0 mb-1 text-foreground">12</h3>
+          <p className="m-0 text-muted-foreground">Agendamentos Hoje</p>
         </div>
 
-        <div style={{
-          backgroundColor: 'white',
-          padding: '20px',
-          borderRadius: '8px',
-          boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-          textAlign: 'center'
-        }}>
-          <div style={{ fontSize: '32px', color: '#2196F3', marginBottom: '10px' }}>📦</div>
-          <h3 style={{ fontSize: '32px', margin: '0 0 5px 0', color: '#333' }}>8</h3>
-          <p style={{ margin: 0, color: '#666' }}>Entregas Ativas</p>
+        <div className="bg-card p-5 rounded-lg shadow-md text-center">
+          <div className="text-3xl text-secondary mb-3">📦</div>
+          <h3 className="text-3xl font-bold m-0 mb-1 text-foreground">8</h3>
+          <p className="m-0 text-muted-foreground">Entregas Ativas</p>
         </div>
 
-        <div style={{
-          backgroundColor: 'white',
-          padding: '20px',
-          borderRadius: '8px',
-          boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-          textAlign: 'center'
-        }}>
-          <div style={{ fontSize: '32px', color: '#FFA726', marginBottom: '10px' }}>⏳</div>
-          <h3 style={{ fontSize: '32px', margin: '0 0 5px 0', color: '#333' }}>5</h3>
-          <p style={{ margin: 0, color: '#666' }}>Pendentes</p>
+        <div className="bg-card p-5 rounded-lg shadow-md text-center">
+          <div className="text-3xl text-warning mb-3">⏳</div>
+          <h3 className="text-3xl font-bold m-0 mb-1 text-foreground">5</h3>
+          <p className="m-0 text-muted-foreground">Pendentes</p>
         </div>
 
-        <div style={{
-          backgroundColor: 'white',
-          padding: '20px',
-          borderRadius: '8px',
-          boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-          textAlign: 'center'
-        }}>
-          <div style={{ fontSize: '32px', color: '#4CAF50', marginBottom: '10px' }}>📈</div>
-          <h3 style={{ fontSize: '32px', margin: '0 0 5px 0', color: '#333' }}>94%</h3>
-          <p style={{ margin: 0, color: '#666' }}>Eficiência</p>
+        <div className="bg-card p-5 rounded-lg shadow-md text-center">
+          <div className="text-3xl text-success mb-3">📈</div>
+          <h3 className="text-3xl font-bold m-0 mb-1 text-foreground">94%</h3>
+          <p className="m-0 text-muted-foreground">Eficiência</p>
         </div>
       </div>
 
-      <div style={{
-        backgroundColor: 'white',
-        padding: '20px',
-        borderRadius: '8px',
-        boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
-      }}>
-        <h2 style={{ 
-          margin: '0 0 20px 0', 
-          color: '#333',
-          fontSize: '20px'
-        }}>
+      <div className="bg-card p-5 rounded-lg shadow-md">
+        <h2 className="m-0 mb-5 text-foreground text-xl font-semibold">
           📋 Agendamentos de Hoje
         </h2>
         
-        <div style={{ marginBottom: '15px', padding: '15px', border: '1px solid #eee', borderRadius: '8px' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <div className="mb-4 p-4 border border-border rounded-lg">
+          <div className="flex justify-between items-center">
             <div>
-              <h4 style={{ margin: '0 0 5px 0', color: '#333' }}>🏪 Distribuidora Norte Ltda</h4>
-              <p style={{ margin: 0, color: '#666', fontSize: '14px' }}>Cereais Premium - 2.5 toneladas</p>
+              <h4 className="m-0 mb-1 text-foreground font-medium">🏪 Distribuidora Norte Ltda</h4>
+              <p className="m-0 text-muted-foreground text-sm">Cereais Premium - 2.5 toneladas</p>
             </div>
-            <div style={{ textAlign: 'right' }}>
-              <span style={{ 
-                backgroundColor: '#4CAF50', 
-                color: 'white', 
-                padding: '4px 8px', 
-                borderRadius: '4px', 
-                fontSize: '12px',
-                display: 'block',
-                marginBottom: '5px'
-              }}>
+            <div className="text-right">
+              <span className="bg-success text-success-foreground px-2 py-1 rounded text-xs block mb-1">
                 ✅ Confirmado
               </span>
-              <span style={{ fontSize: '18px', fontWeight: 'bold', color: '#ff6b35' }}>14:00</span>
+              <span className="text-lg font-bold text-primary">14:00</span>
             </div>
           </div>
         </div>
 
-        <div style={{ marginBottom: '15px', padding: '15px', border: '1px solid #eee', borderRadius: '8px' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <div className="mb-4 p-4 border border-border rounded-lg">
+          <div className="flex justify-between items-center">
             <div>
-              <h4 style={{ margin: '0 0 5px 0', color: '#333' }}>🛒 SuperMercado Central</h4>
-              <p style={{ margin: 0, color: '#666', fontSize: '14px' }}>Laticínios Fresh - 1.8 toneladas</p>
+              <h4 className="m-0 mb-1 text-foreground font-medium">🛒 SuperMercado Central</h4>
+              <p className="m-0 text-muted-foreground text-sm">Laticínios Fresh - 1.8 toneladas</p>
             </div>
-            <div style={{ textAlign: 'right' }}>
-              <span style={{ 
-                backgroundColor: '#FFA726', 
-                color: 'white', 
-                padding: '4px 8px', 
-                borderRadius: '4px', 
-                fontSize: '12px',
-                display: 'block',
-                marginBottom: '5px'
-              }}>
+            <div className="text-right">
+              <span className="bg-warning text-warning-foreground px-2 py-1 rounded text-xs block mb-1">
                 ⏳ Pendente
               </span>
-              <span style={{ fontSize: '18px', fontWeight: 'bold', color: '#ff6b35' }}>15:30</span>
+              <span className="text-lg font-bold text-primary">15:30</span>
             </div>
           </div>
         </div>
 
-        <div style={{ padding: '15px', border: '1px solid #eee', borderRadius: '8px' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <div className="p-4 border border-border rounded-lg">
+          <div className="flex justify-between items-center">
             <div>
-              <h4 style={{ margin: '0 0 5px 0', color: '#333' }}>🏢 Atacadão Sul</h4>
-              <p style={{ margin: 0, color: '#666', fontSize: '14px' }}>Bebidas Fresh - 3.2 toneladas</p>
+              <h4 className="m-0 mb-1 text-foreground font-medium">🏢 Atacadão Sul</h4>
+              <p className="m-0 text-muted-foreground text-sm">Bebidas Fresh - 3.2 toneladas</p>
             </div>
-            <div style={{ textAlign: 'right' }}>
-              <span style={{ 
-                backgroundColor: '#2196F3', 
-                color: 'white', 
-                padding: '4px 8px', 
-                borderRadius: '4px', 
-                fontSize: '12px',
-                display: 'block',
-                marginBottom: '5px'
-              }}>
+            <div className="text-right">
+              <span className="bg-secondary text-secondary-foreground px-2 py-1 rounded text-xs block mb-1">
                 🚛 Em Rota
               </span>
-              <span style={{ fontSize: '18px', fontWeight: 'bold', color: '#ff6b35' }}>16:00</span>
+              <span className="text-lg font-bold text-primary">16:00</span>
             </div>
           </div>
         </div>
       </div>
 
-      <footer style={{
-        marginTop: '20px',
-        textAlign: 'center',
-        color: '#666',
-        fontSize: '14px'
-      }}>
+      <footer className="mt-5 text-center text-muted-foreground text-sm">
         <p>© 2024 Línea Alimentos - Sistema de Logística v1.0</p>
       </footer>
     </div>
