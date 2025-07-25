@@ -1,15 +1,47 @@
-import React from 'react';
+import { Routes, Route } from 'react-router-dom'
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
+import { AppSidebar } from "@/components/AppSidebar"
+import Dashboard from "@/pages/Dashboard"
+import Schedules from "@/pages/Schedules"
+import Deliveries from "@/pages/Deliveries"
+import Clients from "@/pages/Clients"
+import History from "@/pages/History"
+import Settings from "@/pages/Settings"
 
 function App() {
   return (
-    <div style={{ padding: '20px', backgroundColor: '#f0f0f0', minHeight: '100vh' }}>
-      <h1 style={{ color: 'red', fontSize: '48px' }}>TESTE - SE VOCÊ VÊ ISSO, FUNCIONA!</h1>
-      <p style={{ fontSize: '24px', color: 'blue' }}>Línea Alimentos - Sistema funcionando!</p>
-      <div style={{ backgroundColor: 'yellow', padding: '10px', margin: '10px 0' }}>
-        Se você consegue ver este texto amarelo, o React está carregando corretamente.
+    <SidebarProvider>
+      <div className="min-h-screen flex w-full bg-background">
+        <AppSidebar />
+        
+        <div className="flex-1 flex flex-col">
+          <header className="h-16 flex items-center justify-between px-6 border-b bg-card">
+            <div className="flex items-center gap-4">
+              <SidebarTrigger />
+              <div>
+                <h1 className="text-xl font-bold text-primary">🏢 Línea Alimentos</h1>
+                <p className="text-sm text-muted-foreground">Sistema de Logística</p>
+              </div>
+            </div>
+            <div className="text-sm text-muted-foreground">
+              {new Date().toLocaleDateString('pt-BR')}
+            </div>
+          </header>
+
+          <main className="flex-1 p-6">
+            <Routes>
+              <Route path="/" element={<Dashboard />} />
+              <Route path="/agendamentos" element={<Schedules />} />
+              <Route path="/entregas" element={<Deliveries />} />
+              <Route path="/clientes" element={<Clients />} />
+              <Route path="/historico" element={<History />} />
+              <Route path="/configuracoes" element={<Settings />} />
+            </Routes>
+          </main>
+        </div>
       </div>
-    </div>
-  );
+    </SidebarProvider>
+  )
 }
 
-export default App;
+export default App
