@@ -13,18 +13,7 @@ function App() {
         <AppSidebar />
         
         <div className="flex-1 flex flex-col">
-          <header className="h-16 flex items-center justify-between px-6 border-b bg-slate-200">
-            <div className="flex items-center gap-4">
-              <SidebarTrigger />
-              <div>
-                <h1 className="text-xl font-bold text-gray-900">🏢 Línea Alimentos</h1>
-                <p className="text-sm text-muted-foreground">Sistema de Logística</p>
-              </div>
-            </div>
-            <div className="text-sm text-muted-foreground">
-              {new Date().toLocaleDateString('pt-BR')}
-            </div>
-          </header>
+          
 
           <main className="flex-1 p-6">
             <Routes>
