@@ -4,7 +4,8 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
 import { useToast } from "@/hooks/use-toast"
-import { Truck, MapPin, Package, Phone, Search } from "lucide-react"
+import { Truck, MapPin, Package, Phone, Search, Filter, CheckCircle, Clock, AlertTriangle } from "lucide-react"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
 interface Delivery {
   id: number
@@ -33,13 +34,26 @@ const mockDeliveries: Delivery[] = [
 ]
 
 export default function DeliveryManager() {
-  const [deliveries] = useState<Delivery[]>(mockDeliveries)
+  const [deliveries, setDeliveries] = useState<Delivery[]>(mockDeliveries)
   const [searchTerm, setSearchTerm] = useState('')
+  const [statusFilter, setStatusFilter] = useState('all')
   const { toast } = useToast()
 
-  const filteredDeliveries = deliveries.filter(delivery => 
-    delivery.client.toLowerCase().includes(searchTerm.toLowerCase())
-  )
+  const updateDeliveryStatus = (id: number, newStatus: Delivery['status']) => {
+    setDeliveries(prev => prev.map(delivery => 
+      delivery.id === id ? { ...delivery, status: newStatus } : delivery
+    ))
+    toast({ 
+      title: "Status Atualizado", 
+      description: `Entrega #${id} agora está ${newStatus}` 
+    })
+  }
+
+  const filteredDeliveries = deliveries.filter(delivery => {
+    const matchesSearch = delivery.client.toLowerCase().includes(searchTerm.toLowerCase())
+    const matchesStatus = statusFilter === 'all' || delivery.status === statusFilter
+    return matchesSearch && matchesStatus
+  })
 
   const getStatusBadge = (status: Delivery['status']) => {
     const variants = {
@@ -60,14 +74,33 @@ export default function DeliveryManager() {
 
       <Card>
         <CardContent className="pt-6">
-          <div className="relative">
-            <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-            <Input
-              placeholder="Buscar entregas..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-9"
-            />
+          <div className="flex gap-4">
+            <div className="flex-1">
+              <div className="relative">
+                <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                <Input
+                  placeholder="Buscar entregas..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="pl-9"
+                />
+              </div>
+            </div>
+            <div className="min-w-[150px]">
+              <Select value={statusFilter} onValueChange={setStatusFilter}>
+                <SelectTrigger>
+                  <Filter className="h-4 w-4 mr-2" />
+                  <SelectValue placeholder="Status" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">Todos</SelectItem>
+                  <SelectItem value="Em Preparação">Em Preparação</SelectItem>
+                  <SelectItem value="Em Trânsito">Em Trânsito</SelectItem>
+                  <SelectItem value="Entregue">Entregue</SelectItem>
+                  <SelectItem value="Atrasado">Atrasado</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
           </div>
         </CardContent>
       </Card>
@@ -116,12 +149,36 @@ export default function DeliveryManager() {
                 </div>
               </div>
 
-              <div className="flex gap-2 pt-4 border-t">
-                <Button size="sm" variant="outline">
+              <div className="flex flex-wrap gap-2 pt-4 border-t">
+                {delivery.status === 'Em Preparação' && (
+                  <Button size="sm" onClick={() => updateDeliveryStatus(delivery.id, 'Em Trânsito')} className="bg-blue-600 hover:bg-blue-700">
+                    <Truck className="h-4 w-4 mr-2" />
+                    Iniciar Entrega
+                  </Button>
+                )}
+                {delivery.status === 'Em Trânsito' && (
+                  <>
+                    <Button size="sm" onClick={() => updateDeliveryStatus(delivery.id, 'Entregue')} className="bg-green-600 hover:bg-green-700">
+                      <CheckCircle className="h-4 w-4 mr-2" />
+                      Finalizar
+                    </Button>
+                    <Button size="sm" onClick={() => updateDeliveryStatus(delivery.id, 'Atrasado')} variant="destructive">
+                      <AlertTriangle className="h-4 w-4 mr-2" />
+                      Marcar Atraso
+                    </Button>
+                  </>
+                )}
+                {delivery.status === 'Atrasado' && (
+                  <Button size="sm" onClick={() => updateDeliveryStatus(delivery.id, 'Em Trânsito')} className="bg-blue-600 hover:bg-blue-700">
+                    <Clock className="h-4 w-4 mr-2" />
+                    Retomar
+                  </Button>
+                )}
+                <Button size="sm" variant="outline" onClick={() => window.open(`tel:${delivery.contact}`)}>
                   <Phone className="h-4 w-4 mr-2" />
                   Contatar
                 </Button>
-                <Button size="sm" variant="outline">
+                <Button size="sm" variant="outline" onClick={() => window.open(`https://maps.google.com/maps?q=${encodeURIComponent(delivery.address)}`)}>
                   <MapPin className="h-4 w-4 mr-2" />
                   Rastrear
                 </Button>

@@ -2,8 +2,12 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Calendar, Truck, Users, Clock, Package, TrendingUp, AlertCircle } from "lucide-react"
+import { useToast } from "@/hooks/use-toast"
+import { useNavigate } from "react-router-dom"
 
 export default function Dashboard() {
+  const { toast } = useToast()
+  const navigate = useNavigate()
   const stats = [
     { 
       title: "Agendamentos Hoje", 
@@ -156,7 +160,7 @@ export default function Dashboard() {
                   <Calendar className="h-5 w-5 text-primary" />
                   Agendamentos de Hoje
                 </CardTitle>
-                <Button variant="outline" size="sm">
+                <Button variant="outline" size="sm" onClick={() => navigate('/agendamentos')}>
                   Ver Todos
                 </Button>
               </div>
@@ -217,7 +221,12 @@ export default function Dashboard() {
                   </div>
                 ))}
               </div>
-              <Button variant="outline" size="sm" className="w-full mt-4">
+              <Button 
+                variant="outline" 
+                size="sm" 
+                className="w-full mt-4"
+                onClick={() => toast({ title: "Alertas", description: "Funcionalidade em desenvolvimento" })}
+              >
                 Ver Todos os Alertas
               </Button>
             </CardContent>
@@ -230,15 +239,27 @@ export default function Dashboard() {
             </CardHeader>
             <CardContent>
               <div className="space-y-2">
-                <Button className="w-full justify-start" variant="outline">
+                <Button 
+                  className="w-full justify-start" 
+                  variant="outline"
+                  onClick={() => navigate('/agendamentos')}
+                >
                   <Calendar className="h-4 w-4 mr-2" />
                   Novo Agendamento
                 </Button>
-                <Button className="w-full justify-start" variant="outline">
+                <Button 
+                  className="w-full justify-start" 
+                  variant="outline"
+                  onClick={() => navigate('/entregas')}
+                >
                   <Truck className="h-4 w-4 mr-2" />
                   Rastrear Entrega
                 </Button>
-                <Button className="w-full justify-start" variant="outline">
+                <Button 
+                  className="w-full justify-start" 
+                  variant="outline"
+                  onClick={() => navigate('/clientes')}
+                >
                   <Users className="h-4 w-4 mr-2" />
                   Cadastrar Cliente
                 </Button>

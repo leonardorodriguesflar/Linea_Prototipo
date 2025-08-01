@@ -72,11 +72,94 @@ export default function ScheduleManager() {
     return <Badge className={`${variants[status]} text-white`}>{status}</Badge>
   }
 
+  const [newSchedule, setNewSchedule] = useState<Partial<Schedule>>({
+    client: '',
+    cnpj: '',
+    transportadora: '',
+    veiculo: '',
+    motorista: '',
+    telefone: '',
+    produto: '',
+    quantidade: '',
+    endereco: '',
+    dataEntrega: '',
+    horario: '',
+    status: 'Pendente',
+    prioridade: 'Média',
+    observacoes: ''
+  })
+
   const handleConfirm = (id: number) => {
     setSchedules(prev => prev.map(schedule => 
       schedule.id === id ? { ...schedule, status: 'Confirmado' as const } : schedule
     ))
     toast({ title: "Agendamento Confirmado", description: "O agendamento foi confirmado com sucesso!" })
+  }
+
+  const handleCancel = (id: number) => {
+    setSchedules(prev => prev.map(schedule => 
+      schedule.id === id ? { ...schedule, status: 'Cancelado' as const } : schedule
+    ))
+    toast({ title: "Agendamento Cancelado", description: "O agendamento foi cancelado." })
+  }
+
+  const handleStartRoute = (id: number) => {
+    setSchedules(prev => prev.map(schedule => 
+      schedule.id === id ? { ...schedule, status: 'Em Rota' as const } : schedule
+    ))
+    toast({ title: "Rota Iniciada", description: "A entrega está em rota!" })
+  }
+
+  const handleComplete = (id: number) => {
+    setSchedules(prev => prev.map(schedule => 
+      schedule.id === id ? { ...schedule, status: 'Entregue' as const } : schedule
+    ))
+    toast({ title: "Entrega Concluída", description: "Entrega finalizada com sucesso!" })
+  }
+
+  const handleAddSchedule = () => {
+    if (!newSchedule.client || !newSchedule.dataEntrega || !newSchedule.horario) {
+      toast({ title: "Erro", description: "Preencha os campos obrigatórios!" })
+      return
+    }
+
+    const schedule: Schedule = {
+      id: schedules.length + 1,
+      client: newSchedule.client!,
+      cnpj: newSchedule.cnpj!,
+      transportadora: newSchedule.transportadora!,
+      veiculo: newSchedule.veiculo!,
+      motorista: newSchedule.motorista!,
+      telefone: newSchedule.telefone!,
+      produto: newSchedule.produto!,
+      quantidade: newSchedule.quantidade!,
+      endereco: newSchedule.endereco!,
+      dataEntrega: newSchedule.dataEntrega!,
+      horario: newSchedule.horario!,
+      status: 'Pendente',
+      prioridade: newSchedule.prioridade as 'Alta' | 'Média' | 'Baixa',
+      observacoes: newSchedule.observacoes!
+    }
+
+    setSchedules(prev => [...prev, schedule])
+    setNewSchedule({
+      client: '',
+      cnpj: '',
+      transportadora: '',
+      veiculo: '',
+      motorista: '',
+      telefone: '',
+      produto: '',
+      quantidade: '',
+      endereco: '',
+      dataEntrega: '',
+      horario: '',
+      status: 'Pendente',
+      prioridade: 'Média',
+      observacoes: ''
+    })
+    setIsDialogOpen(false)
+    toast({ title: "Agendamento Criado", description: "Novo agendamento criado com sucesso!" })
   }
 
   return (
@@ -86,10 +169,150 @@ export default function ScheduleManager() {
           <h1 className="text-3xl font-bold text-foreground">🏢 Línea Alimentos</h1>
           <p className="text-muted-foreground">Sistema de Agendamento Logístico</p>
         </div>
-        <Button className="bg-primary text-primary-foreground hover:bg-primary/90">
-          <Plus className="h-4 w-4 mr-2" />
-          Novo Agendamento
-        </Button>
+        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+          <DialogTrigger asChild>
+            <Button className="bg-primary text-primary-foreground hover:bg-primary/90">
+              <Plus className="h-4 w-4 mr-2" />
+              Novo Agendamento
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+            <DialogHeader>
+              <DialogTitle>Novo Agendamento de Entrega</DialogTitle>
+            </DialogHeader>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 py-4">
+              <div className="space-y-2">
+                <Label htmlFor="client">Cliente *</Label>
+                <Input
+                  id="client"
+                  value={newSchedule.client}
+                  onChange={(e) => setNewSchedule({...newSchedule, client: e.target.value})}
+                  placeholder="Nome do cliente"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="cnpj">CNPJ</Label>
+                <Input
+                  id="cnpj"
+                  value={newSchedule.cnpj}
+                  onChange={(e) => setNewSchedule({...newSchedule, cnpj: e.target.value})}
+                  placeholder="00.000.000/0000-00"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="transportadora">Transportadora</Label>
+                <Input
+                  id="transportadora"
+                  value={newSchedule.transportadora}
+                  onChange={(e) => setNewSchedule({...newSchedule, transportadora: e.target.value})}
+                  placeholder="Nome da transportadora"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="veiculo">Veículo</Label>
+                <Input
+                  id="veiculo"
+                  value={newSchedule.veiculo}
+                  onChange={(e) => setNewSchedule({...newSchedule, veiculo: e.target.value})}
+                  placeholder="Modelo - Placa"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="motorista">Motorista</Label>
+                <Input
+                  id="motorista"
+                  value={newSchedule.motorista}
+                  onChange={(e) => setNewSchedule({...newSchedule, motorista: e.target.value})}
+                  placeholder="Nome do motorista"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="telefone">Telefone</Label>
+                <Input
+                  id="telefone"
+                  value={newSchedule.telefone}
+                  onChange={(e) => setNewSchedule({...newSchedule, telefone: e.target.value})}
+                  placeholder="(00) 00000-0000"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="produto">Produto</Label>
+                <Input
+                  id="produto"
+                  value={newSchedule.produto}
+                  onChange={(e) => setNewSchedule({...newSchedule, produto: e.target.value})}
+                  placeholder="Tipo de produto"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="quantidade">Quantidade</Label>
+                <Input
+                  id="quantidade"
+                  value={newSchedule.quantidade}
+                  onChange={(e) => setNewSchedule({...newSchedule, quantidade: e.target.value})}
+                  placeholder="Ex: 2.5 toneladas"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="dataEntrega">Data da Entrega *</Label>
+                <Input
+                  id="dataEntrega"
+                  type="date"
+                  value={newSchedule.dataEntrega}
+                  onChange={(e) => setNewSchedule({...newSchedule, dataEntrega: e.target.value})}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="horario">Horário *</Label>
+                <Input
+                  id="horario"
+                  type="time"
+                  value={newSchedule.horario}
+                  onChange={(e) => setNewSchedule({...newSchedule, horario: e.target.value})}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="prioridade">Prioridade</Label>
+                <Select value={newSchedule.prioridade} onValueChange={(value) => setNewSchedule({...newSchedule, prioridade: value as 'Alta' | 'Média' | 'Baixa'})}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Selecione a prioridade" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="Alta">Alta</SelectItem>
+                    <SelectItem value="Média">Média</SelectItem>
+                    <SelectItem value="Baixa">Baixa</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="space-y-2 md:col-span-2">
+                <Label htmlFor="endereco">Endereço de Entrega</Label>
+                <Input
+                  id="endereco"
+                  value={newSchedule.endereco}
+                  onChange={(e) => setNewSchedule({...newSchedule, endereco: e.target.value})}
+                  placeholder="Endereço completo"
+                />
+              </div>
+              <div className="space-y-2 md:col-span-2">
+                <Label htmlFor="observacoes">Observações</Label>
+                <Textarea
+                  id="observacoes"
+                  value={newSchedule.observacoes}
+                  onChange={(e) => setNewSchedule({...newSchedule, observacoes: e.target.value})}
+                  placeholder="Observações adicionais"
+                />
+              </div>
+            </div>
+            <div className="flex justify-end gap-2">
+              <Button variant="outline" onClick={() => setIsDialogOpen(false)}>
+                Cancelar
+              </Button>
+              <Button onClick={handleAddSchedule}>
+                Criar Agendamento
+              </Button>
+            </div>
+          </DialogContent>
+        </Dialog>
       </div>
 
       <Card>
@@ -105,6 +328,22 @@ export default function ScheduleManager() {
                   className="pl-9"
                 />
               </div>
+            </div>
+            <div className="min-w-[150px]">
+              <Select value={statusFilter} onValueChange={setStatusFilter}>
+                <SelectTrigger>
+                  <Filter className="h-4 w-4 mr-2" />
+                  <SelectValue placeholder="Status" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">Todos</SelectItem>
+                  <SelectItem value="Pendente">Pendente</SelectItem>
+                  <SelectItem value="Confirmado">Confirmado</SelectItem>
+                  <SelectItem value="Em Rota">Em Rota</SelectItem>
+                  <SelectItem value="Entregue">Entregue</SelectItem>
+                  <SelectItem value="Cancelado">Cancelado</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
           </div>
         </CardContent>
@@ -153,16 +392,38 @@ export default function ScheduleManager() {
                 </div>
               </div>
 
-              <div className="flex gap-2 pt-4 border-t">
+              <div className="flex flex-wrap gap-2 pt-4 border-t">
                 {schedule.status === 'Pendente' && (
-                  <Button size="sm" onClick={() => handleConfirm(schedule.id)} className="bg-green-600 hover:bg-green-700">
-                    <CheckCircle className="h-4 w-4 mr-2" />
-                    Confirmar
+                  <>
+                    <Button size="sm" onClick={() => handleConfirm(schedule.id)} className="bg-green-600 hover:bg-green-700">
+                      <CheckCircle className="h-4 w-4 mr-2" />
+                      Confirmar
+                    </Button>
+                    <Button size="sm" onClick={() => handleCancel(schedule.id)} variant="destructive">
+                      <XCircle className="h-4 w-4 mr-2" />
+                      Cancelar
+                    </Button>
+                  </>
+                )}
+                {schedule.status === 'Confirmado' && (
+                  <Button size="sm" onClick={() => handleStartRoute(schedule.id)} className="bg-blue-600 hover:bg-blue-700">
+                    <Truck className="h-4 w-4 mr-2" />
+                    Iniciar Rota
                   </Button>
                 )}
-                <Button size="sm" variant="outline">
+                {schedule.status === 'Em Rota' && (
+                  <Button size="sm" onClick={() => handleComplete(schedule.id)} className="bg-green-600 hover:bg-green-700">
+                    <CheckCircle className="h-4 w-4 mr-2" />
+                    Finalizar
+                  </Button>
+                )}
+                <Button size="sm" variant="outline" onClick={() => window.open(`tel:${schedule.telefone}`)}>
                   <Phone className="h-4 w-4 mr-2" />
                   Ligar
+                </Button>
+                <Button size="sm" variant="outline" onClick={() => window.open(`https://maps.google.com/maps?q=${encodeURIComponent(schedule.endereco)}`)}>
+                  <MapPin className="h-4 w-4 mr-2" />
+                  Mapa
                 </Button>
               </div>
             </CardContent>
