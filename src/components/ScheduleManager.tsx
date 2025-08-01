@@ -171,12 +171,17 @@ export default function ScheduleManager() {
         </div>
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogTrigger asChild>
-            <Button className="bg-primary text-primary-foreground hover:bg-primary/90">
+            <Button 
+              className="bg-primary text-primary-foreground hover:bg-primary/90"
+              onClick={() => {
+                setIsDialogOpen(true)
+              }}
+            >
               <Plus className="h-4 w-4 mr-2" />
               Novo Agendamento
             </Button>
           </DialogTrigger>
-          <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+          <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto z-50 bg-background border border-border">
             <DialogHeader>
               <DialogTitle>Novo Agendamento de Entrega</DialogTitle>
             </DialogHeader>
